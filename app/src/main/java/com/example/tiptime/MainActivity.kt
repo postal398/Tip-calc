@@ -4,6 +4,7 @@ import android.icu.text.NumberFormat
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
@@ -54,12 +55,12 @@ fun TipTimeScreen() {
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Spacer(Modifier.height(16.dp))
-            EditNumberField(
+            EditNumberField(//Вызов функции пользовательского ввода чаевых
                 value = amountInput,
                 onValueChange = { amountInput = it }) //It's a custom function
         Spacer(Modifier.height(24.dp))
-        Text(
-            text = stringResource(R.string.tip_amount, tip),
+        Text( // Строка итого чааевых
+            text = stringResource(R.string.tip_amount, tip), //отображает строку Tip Amount и переменную Tip
             modifier = Modifier.align(Alignment.CenterHorizontally),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
@@ -71,7 +72,7 @@ fun TipTimeScreen() {
 
 
 @Composable
-fun EditNumberField(
+fun EditNumberField(//Функция описывающая поведение пользовательского ввода чаевых
     value: String,
     onValueChange: (String) -> Unit)
 {
@@ -88,22 +89,11 @@ fun EditNumberField(
 }
 
 
-private fun calculateTip(
+@VisibleForTesting
+internal fun calculateTip(
     amount: Double,
     tipPercent: Double = 15.0
 ): String? {
     val tip = tipPercent / 100 * amount
     return NumberFormat.getCurrencyInstance().format(tip)
-}
-
-
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TipTimeTheme {
-        TipTimeScreen()
-    }
 }
