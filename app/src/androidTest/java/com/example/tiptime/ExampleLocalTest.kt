@@ -1,12 +1,10 @@
 package com.example.tiptime
 
-import androidx.test.platform.app.InstrumentationRegistry
+import android.icu.text.NumberFormat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -15,10 +13,13 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.tiptime", appContext.packageName)
+    fun calculate_20_percent_tip_no_roundup() {
+        var amount = 10.00
+        var tipPercent = 20.00
+        val expectedTip = NumberFormat.getCurrencyInstance().format(1.5)
+        val actualTip = calculateTip(10.0, 15.0)
+        assertEquals(expectedTip, actualTip)
     }
 }
